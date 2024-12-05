@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import { motion } from "framer-motion";
-import config from "../config"; // Adjust the path if needed
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,10 +31,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${config.apiUrl}/auth/login`, {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `https://ordermanager-server-production.up.railway.app/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
 
       // Save the token in localStorage
       localStorage.setItem("authToken", response.data.token);

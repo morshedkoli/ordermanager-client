@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import config from "../config"; // Adjust the path if needed
 
 const OrderForm = () => {
   const [serviceName, setServiceName] = useState("");
@@ -39,9 +38,13 @@ const OrderForm = () => {
     try {
       const token = localStorage.getItem("authToken");
 
-      await axios.post(`${config.apiUrl}/orders`, orderData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.post(
+        `https://ordermanager-server-production.up.railway.app/orders`,
+        orderData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       toast.success("Order created successfully!");
       setServiceName("");

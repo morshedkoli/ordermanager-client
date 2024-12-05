@@ -4,7 +4,6 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import config from "../config"; // Adjust the path if needed
 
 const OrderView = () => {
   const { id } = useParams();
@@ -34,9 +33,12 @@ const OrderView = () => {
     const fetchOrder = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await axios.get(`${config.apiUrl}/orders/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          `https://ordermanager-server-production.up.railway.app/orders/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setOrder(response.data);
       } catch (err) {
         console.error("Error fetching order:", err);
@@ -68,9 +70,13 @@ const OrderView = () => {
       };
 
       // Send the update request
-      await axios.put(`${config.apiUrl}/orders/${id}`, updatedData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.put(
+        `https://ordermanager-server-production.up.railway.app/orders/${id}`,
+        updatedData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       // Update state
       setOrder((prev) => ({

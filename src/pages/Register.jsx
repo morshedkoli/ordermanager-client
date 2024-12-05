@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import config from "../config"; // Adjust the path if needed
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -13,11 +12,14 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${config.apiUrl}/auth/register`, {
-        name,
-        email,
-        password,
-      });
+      await axios.post(
+        `https://ordermanager-server-production.up.railway.app/auth/register`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
       navigate("/login");
     } catch (err) {
       console.log(err);

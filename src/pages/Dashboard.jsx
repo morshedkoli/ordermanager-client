@@ -27,9 +27,12 @@ const Dashboard = () => {
   ) => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.get(`${config.apiUrl}/orders`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `https://ordermanager-server-production.up.railway.app/orders`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       let filteredOrders = response.data
         .filter((order) => {
