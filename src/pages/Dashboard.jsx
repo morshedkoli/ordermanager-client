@@ -294,7 +294,7 @@ const Dashboard = () => {
                     className="block sm:inline px-2 py-1 capitalize text-white bg-green-500 rounded hover:bg-green-600"
                     onClick={() => handleStatusChange(order._id, order.status)}
                   >
-                    <span className="flex ">
+                    <span className="flex items-center	justify-items-center	">
                       <span>{order.status}</span> <BsArrowRightSquareFill />
                     </span>
                   </motion.button>
