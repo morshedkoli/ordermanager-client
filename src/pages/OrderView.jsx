@@ -139,6 +139,9 @@ const OrderView = () => {
             <span className="font-bold">Status:</span> {order.status}
           </p>
           <p>
+            <span className="font-bold">Cost Amount:</span> ${order.cost}
+          </p>
+          <p>
             <span className="font-bold">Paid Amount:</span> ${order.paidAmount}
           </p>
         </div>
