@@ -291,10 +291,12 @@ const Dashboard = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="flex gap-1 sm:inline px-2 py-1 capitalize text-white bg-green-500 rounded hover:bg-green-600"
+                    className="block sm:inline px-2 py-1 capitalize text-white bg-green-500 rounded hover:bg-green-600"
                     onClick={() => handleStatusChange(order._id, order.status)}
                   >
-                    {order.status} <BsArrowRightSquareFill />
+                    <span className="flex flex-row">
+                      <span>{order.status}</span> <BsArrowRightSquareFill />
+                    </span>
                   </motion.button>
                 </td>
               </motion.tr>
