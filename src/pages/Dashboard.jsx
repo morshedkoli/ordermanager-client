@@ -10,6 +10,8 @@ import { BsArrowRightSquareFill } from "react-icons/bs";
 const Dashboard = () => {
   const [orders, setOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [serviceNameFilter, setServiceNameFilter] = useState("");
+  const [serviceNames, setServiceNames] = useState([]);
   const navigate = useNavigate();
   const statusSteps = [
     "agreement",
@@ -24,7 +26,8 @@ const Dashboard = () => {
   const fetchOrders = async (
     searchQuery = "",
     statusFilter = "",
-    showAllOrders = false
+    showAllOrders = false,
+    serviceNameFilter = ""
   ) => {
     try {
       const token = localStorage.getItem("authToken");
@@ -60,6 +63,10 @@ const Dashboard = () => {
               order.status.toLowerCase().includes(searchQuery.toLowerCase())) &&
             (statusFilter
               ? order.status.toLowerCase() === statusFilter.toLowerCase()
+              : true) &&
+            (serviceNameFilter
+              ? order.serviceName.toLowerCase() ===
+                serviceNameFilter.toLowerCase()
               : true)
           );
         })
@@ -67,6 +74,12 @@ const Dashboard = () => {
         .sort((a, b) => new Date(a.deliveryDate) - new Date(b.deliveryDate));
 
       setOrders(filteredOrders);
+
+      // Populate unique service names for the filter dropdown
+      const uniqueServiceNames = [
+        ...new Set(response.data.map((order) => order.serviceName)),
+      ];
+      setServiceNames(uniqueServiceNames);
     } catch (err) {
       console.error("Error fetching orders:", err);
     }
@@ -91,7 +104,7 @@ const Dashboard = () => {
         }
       );
       toast.success(`Order status updated to "${nextStatus}"`);
-      fetchOrders(searchQuery);
+      fetchOrders(searchQuery, "", false, serviceNameFilter);
     } catch (err) {
       console.error("Error updating status:", err);
       toast.error("Failed to update order status. Please try again.");
@@ -107,15 +120,20 @@ const Dashboard = () => {
   };
 
   const handleSearch = () => {
-    fetchOrders(searchQuery);
+    fetchOrders(searchQuery, "", false, serviceNameFilter);
   };
 
   const handleStatusFilter = (status) => {
-    fetchOrders(searchQuery, status);
+    fetchOrders(searchQuery, status, false, serviceNameFilter);
   };
 
   const handleShowAllOrders = () => {
-    fetchOrders(searchQuery, "", true);
+    fetchOrders(searchQuery, "", true, serviceNameFilter);
+  };
+
+  const handleServiceNameFilter = (serviceName) => {
+    setServiceNameFilter(serviceName);
+    fetchOrders(searchQuery, "", false, serviceName);
   };
 
   return (
@@ -146,6 +164,29 @@ const Dashboard = () => {
           className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
         >
           Search
+        </motion.button>
+      </div>
+
+      {/* Service Name Filter */}
+      <div className="mb-4 flex flex-wrap gap-2">
+        {serviceNames.map((serviceName) => (
+          <motion.button
+            key={serviceName}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => handleServiceNameFilter(serviceName)}
+            className="px-4 py-2 text-white bg-purple-500 rounded hover:bg-purple-600"
+          >
+            {serviceName.toUpperCase()}
+          </motion.button>
+        ))}
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => handleServiceNameFilter("")}
+          className="px-4 py-2 text-white bg-gray-400 rounded hover:bg-gray-500"
+        >
+          All Services
         </motion.button>
       </div>
 
@@ -193,12 +234,10 @@ const Dashboard = () => {
               <th className="p-3 border border-gray-300 hidden sm:table-cell">
                 Birth Date
               </th>
-
               <th className="p-3 border border-gray-300 hidden sm:table-cell">
                 Cost
               </th>
               <th className="p-3 border border-gray-300">Due</th>
-
               <th className="p-3 border border-gray-300">Status</th>
               <th className="p-3 border border-gray-300">Actions</th>
             </tr>
@@ -224,27 +263,17 @@ const Dashboard = () => {
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {new Date(order.deliveryDate).toLocaleDateString()}
                 </td>
-
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {new Date(order.birthdate).toLocaleDateString()}
                 </td>
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {order.cost}
                 </td>
-
-                {
-                  (order.cost = order.paidAmount ? (
-                    <td className="p-3 border text-green-600 font-bold border-gray-300">
-                      Fully Paid
-                    </td>
-                  ) : (
-                    <span>
-                      <td className="p-3 border border-gray-300">
-                        {order.cost - order.paidAmount}
-                      </td>
-                    </span>
-                  ))
-                }
+                <td className="p-3 border border-gray-300">
+                  {order.paidAmount
+                    ? "Fully Paid"
+                    : order.cost - order.paidAmount}
+                </td>
                 <td className="p-3 border border-gray-300">{order.status}</td>
                 <td className="p-3 border border-gray-300 space-y-2 sm:space-x-2">
                   <motion.button
