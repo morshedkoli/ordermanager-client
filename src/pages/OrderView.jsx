@@ -4,6 +4,8 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// Import Font Awesome for icons
+import { FaCopy } from "react-icons/fa";
 
 const OrderView = () => {
   const { id } = useParams();
@@ -101,6 +103,11 @@ const OrderView = () => {
     }
   };
 
+  const handleCopy = (text) => {
+    navigator.clipboard.writeText(text);
+    toast.success("Copied to clipboard!");
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -130,7 +137,6 @@ const OrderView = () => {
             <span className="font-bold">Delivery Date:</span>{" "}
             {new Date(order.deliveryDate).toLocaleDateString()}
           </p>
-
           <p>
             <span className="font-bold">Birth Date:</span>{" "}
             {new Date(order.birthdate).toLocaleDateString()}
@@ -151,29 +157,59 @@ const OrderView = () => {
           {/* Username */}
           <div>
             <label className="block font-bold">Username</label>
-            <input
-              type="text"
-              placeholder={order.username || "Enter username"}
-              value={updates.username}
-              onChange={(e) =>
-                setUpdates({ ...updates, username: e.target.value })
-              }
-              className="w-full p-2 border rounded-lg"
-            />
+            {order.username ? (
+              <div className="flex items-center gap-2">
+                <span className="block p-2 bg-gray-200 rounded-lg">
+                  {order.username}
+                </span>
+                <button
+                  onClick={() => handleCopy(order.username)}
+                  className="p-2 text-blue-500 rounded hover:text-blue-600"
+                  title="Copy Username"
+                >
+                  <FaCopy size={20} />
+                </button>
+              </div>
+            ) : (
+              <input
+                type="text"
+                placeholder="Enter username"
+                value={updates.username}
+                onChange={(e) =>
+                  setUpdates({ ...updates, username: e.target.value })
+                }
+                className="w-full p-2 border rounded-lg"
+              />
+            )}
           </div>
 
           {/* Password */}
           <div>
             <label className="block font-bold">Password</label>
-            <input
-              type="text"
-              placeholder="Enter password"
-              value={updates.password}
-              onChange={(e) =>
-                setUpdates({ ...updates, password: e.target.value })
-              }
-              className="w-full p-2 border rounded-lg"
-            />
+            {order.password ? (
+              <div className="flex items-center gap-2">
+                <span className="block p-2 bg-gray-200 rounded-lg">
+                  {order.password}
+                </span>
+                <button
+                  onClick={() => handleCopy(order.password)}
+                  className="p-2 text-blue-500 rounded hover:text-blue-600"
+                  title="Copy Password"
+                >
+                  <FaCopy size={20} />
+                </button>
+              </div>
+            ) : (
+              <input
+                type="text"
+                placeholder="Enter password"
+                value={updates.password}
+                onChange={(e) =>
+                  setUpdates({ ...updates, password: e.target.value })
+                }
+                className="w-full p-2 border rounded-lg"
+              />
+            )}
           </div>
 
           {/* More Info */}
