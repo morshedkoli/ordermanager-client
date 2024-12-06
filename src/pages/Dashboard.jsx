@@ -273,12 +273,19 @@ const Dashboard = () => {
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {order.cost}
                 </td>
-                <td className="p-3 border border-gray-300">
-                  {order.paidAmount
-                    ? "Fully Paid"
-                    : order.cost - order.paidAmount}
+
+                {order.paidAmount ? (
+                  <td className="p-3  border uppercase font-bold text-green-600 border-gray-300">
+                    Fully Paid
+                  </td>
+                ) : (
+                  <td className="p-3 border uppercase border-gray-300">
+                    {order.cost - order.paidAmount}
+                  </td>
+                )}
+                <td className="p-3 border uppercase border-gray-300">
+                  {order.status}
                 </td>
-                <td className="p-3 border border-gray-300">{order.status}</td>
                 <td className="p-3 border border-gray-300 space-y-2 sm:space-x-2">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
