@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
 import config from "../config"; // Adjust the path if needed
 import { BsArrowRightSquareFill } from "react-icons/bs";
+import Statistics from "../components/Statistics";
 
 const Dashboard = () => {
   const [orders, setOrders] = useState([]);
@@ -139,6 +140,9 @@ const Dashboard = () => {
   return (
     <div className="p-6">
       <ToastContainer position="top-right" autoClose={3000} />
+
+      <Statistics orders={orders} statusSteps={statusSteps} />
+
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
