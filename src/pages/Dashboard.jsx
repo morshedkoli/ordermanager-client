@@ -274,15 +274,17 @@ const Dashboard = () => {
                   {order.cost}
                 </td>
 
-                {order.paidAmount ? (
-                  <td className="p-3  border uppercase font-bold text-green-600 border-gray-300">
-                    Fully Paid
-                  </td>
-                ) : (
-                  <td className="p-3 border uppercase border-gray-300">
-                    {order.cost - order.paidAmount}
-                  </td>
-                )}
+                {
+                  (order.paidAmount = order.cost ? (
+                    <td className="p-3  border uppercase font-bold text-green-600 border-gray-300">
+                      Fully Paid
+                    </td>
+                  ) : (
+                    <td className="p-3 border uppercase border-gray-300">
+                      {order.cost - order.paidAmount}
+                    </td>
+                  ))
+                }
                 <td className="p-3 border uppercase border-gray-300">
                   {order.status}
                 </td>
