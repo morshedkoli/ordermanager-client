@@ -224,7 +224,7 @@ const Dashboard = () => {
                 </td>
 
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
-                  {new Date(order.birthDate).toLocaleDateString()}
+                  {new Date(order.birthdate).toLocaleDateString()}
                 </td>
 
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
