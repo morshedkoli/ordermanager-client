@@ -143,6 +143,7 @@ const OrderView = () => {
           </p>
           <p>
             <span className="font-bold">Status:</span> {order.status}
+            <span className="font-bold">More Ifno:</span> {order.moreInfo}
           </p>
           <p>
             <span className="font-bold">Cost Amount:</span> ${order.cost}
