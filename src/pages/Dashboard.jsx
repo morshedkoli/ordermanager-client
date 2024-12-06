@@ -193,10 +193,12 @@ const Dashboard = () => {
               <th className="p-3 border border-gray-300 hidden sm:table-cell">
                 Birth Date
               </th>
+
               <th className="p-3 border border-gray-300 hidden sm:table-cell">
                 Cost
               </th>
               <th className="p-3 border border-gray-300">Due</th>
+
               <th className="p-3 border border-gray-300">Status</th>
               <th className="p-3 border border-gray-300">Actions</th>
             </tr>
@@ -226,13 +228,23 @@ const Dashboard = () => {
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {new Date(order.birthdate).toLocaleDateString()}
                 </td>
-
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {order.cost}
                 </td>
-                <td className="p-3 border border-gray-300">
-                  {order.cost - order.paidAmount}
-                </td>
+
+                {
+                  (order.cost = order.paidAmount ? (
+                    <td className="p-3 border text-green-600 font-bold border-gray-300">
+                      Fully Paid
+                    </td>
+                  ) : (
+                    <span>
+                      <td className="p-3 border border-gray-300">
+                        {order.cost - order.paidAmount}
+                      </td>
+                    </span>
+                  ))
+                }
                 <td className="p-3 border border-gray-300">{order.status}</td>
                 <td className="p-3 border border-gray-300 space-y-2 sm:space-x-2">
                   <motion.button
