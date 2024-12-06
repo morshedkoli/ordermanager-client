@@ -279,18 +279,18 @@ const Dashboard = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="block sm:inline px-2 py-1 capitalize text-white bg-green-500 rounded hover:bg-green-600"
-                    onClick={() => handleStatusChange(order._id, order.status)}
-                  >
-                    {order.status} <BsArrowRightSquareFill />
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
                     className="block sm:inline px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600"
                     onClick={() => navigate(`/view-order/${order._id}`)}
                   >
                     View
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex gap-1 sm:inline px-2 py-1 capitalize text-white bg-green-500 rounded hover:bg-green-600"
+                    onClick={() => handleStatusChange(order._id, order.status)}
+                  >
+                    {order.status} <BsArrowRightSquareFill />
                   </motion.button>
                 </td>
               </motion.tr>
