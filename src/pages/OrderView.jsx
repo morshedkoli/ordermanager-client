@@ -20,6 +20,7 @@ const OrderView = () => {
     password: "",
     moreInfo: "",
     status: "",
+    birthdate: "",
   });
 
   const [updates, setUpdates] = useState({
@@ -128,6 +129,11 @@ const OrderView = () => {
           <p>
             <span className="font-bold">Delivery Date:</span>{" "}
             {new Date(order.deliveryDate).toLocaleDateString()}
+          </p>
+
+          <p>
+            <span className="font-bold">Birth Date:</span>{" "}
+            {new Date(order.birthdate).toLocaleDateString()}
           </p>
           <p>
             <span className="font-bold">Status:</span> {order.status}

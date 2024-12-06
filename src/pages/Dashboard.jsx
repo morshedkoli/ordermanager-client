@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
 import config from "../config"; // Adjust the path if needed
+import { BsArrowRightSquareFill } from "react-icons/bs";
 
 const Dashboard = () => {
   const [orders, setOrders] = useState([]);
@@ -218,6 +219,11 @@ const Dashboard = () => {
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {new Date(order.deliveryDate).toLocaleDateString()}
                 </td>
+
+                <td className="p-3 border border-gray-300 hidden sm:table-cell">
+                  {new Date(order.birthDate).toLocaleDateString()}
+                </td>
+
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {order.cost}
                 </td>
@@ -232,7 +238,7 @@ const Dashboard = () => {
                     className="block sm:inline px-2 py-1 capitalize text-white bg-green-500 rounded hover:bg-green-600"
                     onClick={() => handleStatusChange(order._id, order.status)}
                   >
-                    {order.status} Done
+                    {order.status} <BsArrowRightSquareFill />
                   </motion.button>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
