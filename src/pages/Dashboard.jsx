@@ -191,6 +191,9 @@ const Dashboard = () => {
                 Delivery Date
               </th>
               <th className="p-3 border border-gray-300 hidden sm:table-cell">
+                Birth Date
+              </th>
+              <th className="p-3 border border-gray-300 hidden sm:table-cell">
                 Cost
               </th>
               <th className="p-3 border border-gray-300">Due</th>
