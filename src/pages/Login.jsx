@@ -32,7 +32,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `https://ordermanager-server-production.up.railway.app/auth/login`,
+        `${process.env.REACT_APP_API_HOST_LINK}/auth/login`,
         {
           email,
           password,
@@ -72,7 +72,7 @@ const Login = () => {
         transition={{ duration: 0.6 }}
       >
         <h2 className="mb-6 text-3xl font-semibold text-center text-gray-800">
-          Login
+          Login <p>{process.env.API_HOST_LINK}</p>
         </h2>
         {error && <p className="mb-4 text-red-500 text-center">{error}</p>}
 

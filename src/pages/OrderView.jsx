@@ -16,7 +16,7 @@ const OrderView = () => {
     customerName: "",
     agent: "",
     deliveryDate: "",
-    cost: "",
+    cost: 0,
     paidAmount: 0,
     username: "",
     password: "",
@@ -29,7 +29,7 @@ const OrderView = () => {
     username: "",
     password: "",
     moreInfo: "",
-    incrementAmount: "",
+    incrementAmount: 0,
   });
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const OrderView = () => {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
-          `https://ordermanager-server-production.up.railway.app/orders/${id}`,
+          `${process.env.REACT_APP_API_HOST_LINK}/orders/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -69,22 +69,27 @@ const OrderView = () => {
         username: updates.username || order.username,
         password: updates.password || order.password,
         moreInfo: updates.moreInfo || order.moreInfo,
-        paidAmount: newPaidAmount,
+        paidAmount: increment,
       };
 
       // Send the update request
       await axios.put(
-        `https://ordermanager-server-production.up.railway.app/orders/${id}`,
+        `${process.env.REACT_APP_API_HOST_LINK}/orders/${id}`,
         updatedData,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
+      const latestData = {
+        username: updates.username || order.username,
+        password: updates.password || order.password,
+        moreInfo: updates.moreInfo || order.moreInfo,
+        paidAmount: newPaidAmount,
+      };
       // Update state
       setOrder((prev) => ({
         ...prev,
-        ...updatedData,
+        ...latestData,
       }));
 
       // Clear input fields
@@ -92,11 +97,11 @@ const OrderView = () => {
         username: "",
         password: "",
         moreInfo: "",
-        incrementAmount: "",
+        incrementAmount: 0,
       });
 
       toast.success("Order updated successfully!");
-      navigate("/");
+      navigate(`/view-order/${id}`);
     } catch (err) {
       console.error("Error updating order:", err);
       toast.error("Failed to update the order.");
@@ -124,32 +129,39 @@ const OrderView = () => {
         {/* Order Information */}
         <div className="space-y-4">
           <p>
-            <span className="font-bold">Service Name:</span> {order.serviceName}
+            <span className="text-slate-400">Service Name:</span>{" "}
+            <span className="font-bold capitalize">{order.serviceName}</span>
           </p>
           <p>
-            <span className="font-bold">Customer Name:</span>{" "}
+            <span className="text-slate-400">Customer Name:</span>{" "}
             {order.customerName}
           </p>
           <p>
-            <span className="font-bold">Agent:</span> {order.agent}
+            <span className="text-slate-400">Agent:</span> {order.agent}
           </p>
           <p>
-            <span className="font-bold">Delivery Date:</span>{" "}
+            <span className="text-slate-400">Delivery Date:</span>{" "}
             {new Date(order.deliveryDate).toLocaleDateString()}
           </p>
           <p>
-            <span className="font-bold">Birth Date:</span>{" "}
+            <span className="text-slate-400">Birth Date:</span>{" "}
             {new Date(order.birthdate).toLocaleDateString()}
           </p>
           <p>
-            <span className="font-bold">Status:</span> {order.status}
-            <span className="font-bold">More Ifno:</span> {order.moreInfo}
+            <span className="text-slate-400">Status:</span> {order.status}
+          </p>
+          {order.moreInfo && (
+            <p>
+              <span className="text-slate-400">More Ifno:</span>{" "}
+              {order.moreInfo}
+            </p>
+          )}
+          <p>
+            <span className="text-slate-400">Cost Amount:</span> ${order.cost}
           </p>
           <p>
-            <span className="font-bold">Cost Amount:</span> ${order.cost}
-          </p>
-          <p>
-            <span className="font-bold">Paid Amount:</span> ${order.paidAmount}
+            <span className="text-slate-400">Paid Amount:</span> $
+            {order.paidAmount}
           </p>
         </div>
 

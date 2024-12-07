@@ -24,7 +24,7 @@ const OrderForm = () => {
     const orderData = {
       serviceName,
       customerName,
-      agent,
+      agent: agent || "Self",
       deliveryDate,
       cost,
       paidAmount,
@@ -39,7 +39,7 @@ const OrderForm = () => {
       const token = localStorage.getItem("authToken");
 
       await axios.post(
-        "https://ordermanager-server-production.up.railway.app/orders",
+        `${process.env.REACT_APP_API_HOST_LINK}/orders`,
         orderData,
         {
           headers: { Authorization: `Bearer ${token}` },

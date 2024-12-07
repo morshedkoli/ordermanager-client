@@ -4,7 +4,6 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
-import config from "../config"; // Adjust the path if needed
 import { BsArrowRightSquareFill } from "react-icons/bs";
 import Statistics from "../components/Statistics";
 
@@ -33,7 +32,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.get(
-        `https://ordermanager-server-production.up.railway.app/orders`,
+        `${process.env.REACT_APP_API_HOST_LINK}/orders`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -44,7 +43,7 @@ const Dashboard = () => {
           // Show all orders if "All Orders" is selected
           if (showAllOrders) return true;
 
-          // Exclude "Delivered" and "Done" by default
+          // Exclude "delivered" and "done" orders only when no specific status filter is applied
           if (
             !statusFilter &&
             (order.status === "delivered" || order.status === "done")
@@ -52,7 +51,7 @@ const Dashboard = () => {
             return false;
           }
 
-          // Apply search filter
+          // Apply search and filter conditions
           return (
             (order.customerName
               .toLowerCase()
@@ -78,7 +77,17 @@ const Dashboard = () => {
 
       // Populate unique service names for the filter dropdown
       const uniqueServiceNames = [
-        ...new Set(response.data.map((order) => order.serviceName)),
+        ...new Set(
+          response.data
+            .filter(
+              (order) =>
+                (!statusFilter &&
+                  order.status !== "delivered" &&
+                  order.status !== "done") ||
+                statusFilter
+            )
+            .map((order) => order.serviceName)
+        ),
       ];
       setServiceNames(uniqueServiceNames);
     } catch (err) {
@@ -98,7 +107,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("authToken");
       await axios.patch(
-        `${config.apiUrl}/orders/${orderId}/status`,
+        `${process.env.REACT_APP_API_HOST_LINK}/orders/${orderId}/status`,
         { status: nextStatus },
         {
           headers: { Authorization: `Bearer ${token}` },
