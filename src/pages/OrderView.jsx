@@ -4,7 +4,6 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// Import Font Awesome for icons
 import { FaCopy } from "react-icons/fa";
 
 const OrderView = () => {
@@ -56,7 +55,6 @@ const OrderView = () => {
     try {
       const token = localStorage.getItem("authToken");
 
-      // Calculate new paid amount
       const increment = parseFloat(updates.incrementAmount);
       if (isNaN(increment)) {
         toast.error("Please enter a valid number for paid amount increment.");
@@ -64,7 +62,6 @@ const OrderView = () => {
       }
       const newPaidAmount = order.paidAmount + increment;
 
-      // Prepare updated data
       const updatedData = {
         username: updates.username || order.username,
         password: updates.password || order.password,
@@ -72,7 +69,6 @@ const OrderView = () => {
         paidAmount: increment,
       };
 
-      // Send the update request
       await axios.put(
         `${process.env.REACT_APP_API_HOST_LINK}/orders/${id}`,
         updatedData,
@@ -86,13 +82,12 @@ const OrderView = () => {
         moreInfo: updates.moreInfo || order.moreInfo,
         paidAmount: newPaidAmount,
       };
-      // Update state
+
       setOrder((prev) => ({
         ...prev,
         ...latestData,
       }));
 
-      // Clear input fields
       setUpdates({
         username: "",
         password: "",
@@ -126,7 +121,6 @@ const OrderView = () => {
           Order Details
         </h2>
 
-        {/* Order Information */}
         <div className="space-y-4">
           <p>
             <span className="text-slate-400">Service Name:</span>{" "}
@@ -152,7 +146,7 @@ const OrderView = () => {
           </p>
           {order.moreInfo && (
             <p>
-              <span className="text-slate-400">More Ifno:</span>{" "}
+              <span className="text-slate-400">More Info:</span>{" "}
               {order.moreInfo}
             </p>
           )}
@@ -165,9 +159,7 @@ const OrderView = () => {
           </p>
         </div>
 
-        {/* Editable Fields */}
         <div className="mt-6 space-y-4">
-          {/* Username */}
           <div>
             <label className="block font-bold">Username</label>
             {order.username ? (
@@ -196,7 +188,6 @@ const OrderView = () => {
             )}
           </div>
 
-          {/* Password */}
           <div>
             <label className="block font-bold">Password</label>
             {order.password ? (
@@ -225,7 +216,6 @@ const OrderView = () => {
             )}
           </div>
 
-          {/* More Info */}
           <div>
             <label className="block font-bold">More Info</label>
             <textarea
@@ -238,7 +228,6 @@ const OrderView = () => {
             />
           </div>
 
-          {/* Increment Paid Amount */}
           <div>
             <label className="block font-bold">Increment Paid Amount</label>
             <input
@@ -253,12 +242,19 @@ const OrderView = () => {
           </div>
         </div>
 
-        {/* Update Button */}
         <button
           onClick={handleUpdate}
           className="w-full py-2 mt-6 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition-transform transform hover:-translate-y-1"
         >
           Update Order
+        </button>
+
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="w-full py-2 mt-4 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-transform transform hover:-translate-y-1"
+        >
+          Back
         </button>
       </div>
     </motion.div>

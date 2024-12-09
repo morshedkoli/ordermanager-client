@@ -238,18 +238,16 @@ const Dashboard = () => {
             <tr>
               <th className="p-3 border border-gray-300">Service Name</th>
               <th className="p-3 border border-gray-300">Customer Name</th>
-              <th className="p-3 border border-gray-300 hidden sm:table-cell">
-                Agent
-              </th>
+
               <th className="p-3 border border-gray-300 hidden sm:table-cell">
                 Delivery Date
               </th>
               <th className="p-3 border border-gray-300 hidden sm:table-cell">
                 Birth Date
               </th>
-              <th className="p-3 border border-gray-300 hidden sm:table-cell">
+              {/* <th className="p-3 border border-gray-300 hidden sm:table-cell">
                 Cost
-              </th>
+              </th> */}
               <th className="p-3 border border-gray-300">Due</th>
               <th className="p-3 border border-gray-300">Status</th>
               <th className="p-3 border border-gray-300">Actions</th>
@@ -270,30 +268,26 @@ const Dashboard = () => {
                 <td className="p-3 border capitalize border-gray-300">
                   {order.customerName}
                 </td>
-                <td className="p-3 border capitalize border-gray-300 hidden sm:table-cell">
-                  {order.agent}
-                </td>
+
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {new Date(order.deliveryDate).toLocaleDateString()}
                 </td>
                 <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {new Date(order.birthdate).toLocaleDateString()}
                 </td>
-                <td className="p-3 border border-gray-300 hidden sm:table-cell">
+                {/* <td className="p-3 border border-gray-300 hidden sm:table-cell">
                   {order.cost}
-                </td>
+                </td> */}
 
-                {
-                  (order.paidAmount = order.cost ? (
-                    <td className="p-3  border uppercase font-bold text-green-600 border-gray-300">
-                      Fully Paid
-                    </td>
-                  ) : (
-                    <td className="p-3 border uppercase border-gray-300">
-                      {order.cost - order.paidAmount}
-                    </td>
-                  ))
-                }
+                {parseInt(order.paidAmount) === parseInt(order.cost) ? (
+                  <td className="p-3  border uppercase font-bold text-green-600 border-gray-300">
+                    Fully Paid
+                  </td>
+                ) : (
+                  <td className="p-3 border uppercase border-gray-300">
+                    {order.cost - order.paidAmount}
+                  </td>
+                )}
                 <td className="p-3 border uppercase border-gray-300">
                   {order.status}
                 </td>
