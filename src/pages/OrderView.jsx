@@ -116,120 +116,160 @@ const OrderView = () => {
       className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300"
     >
       <ToastContainer />
-      <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-lg">
-        <h2 className="mb-4 text-2xl font-bold text-center text-gray-800">
+      <div className="p-8 bg-white rounded-lg capitalize shadow-lg w-full max-w-4xl relative">
+        {/* Back Button at Top Right */}
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-4 right-4 p-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-transform transform hover:-translate-y-1"
+        >
+          Back
+        </button>
+
+        <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
           Order Details
         </h2>
 
-        <div className="space-y-4">
-          <p>
-            <span className="text-slate-400">Service Name:</span>{" "}
-            <span className="font-bold capitalize">{order.serviceName}</span>
-          </p>
-          <p>
-            <span className="text-slate-400">Customer Name:</span>{" "}
-            {order.customerName}
-          </p>
-          <p>
-            <span className="text-slate-400">Agent:</span> {order.agent}
-          </p>
-          <p>
-            <span className="text-slate-400">Delivery Date:</span>{" "}
-            {new Date(order.deliveryDate).toLocaleDateString()}
-          </p>
-          <p>
-            <span className="text-slate-400">Birth Date:</span>{" "}
-            {new Date(order.birthdate).toLocaleDateString()}
-          </p>
-          <p>
-            <span className="text-slate-400">Status:</span> {order.status}
-          </p>
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Service Name
+              </label>
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                {order.serviceName}
+              </span>
+            </div>
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Customer Name
+              </label>
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                {order.customerName}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Agent
+              </label>
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                {order.agent}
+              </span>
+            </div>
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Delivery Date
+              </label>
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                {new Date(order.deliveryDate).toLocaleDateString()}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Birth Date
+              </label>
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                {new Date(order.birthdate).toLocaleDateString()}
+              </span>
+            </div>
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Status
+              </label>
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                {order.status}
+              </span>
+            </div>
+          </div>
           {order.moreInfo && (
-            <p>
-              <span className="text-slate-400">More Info:</span>{" "}
-              {order.moreInfo}
-            </p>
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                More Info
+              </label>
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                {order.moreInfo}
+              </span>
+            </div>
           )}
-          <p>
-            <span className="text-slate-400">Cost Amount:</span> ${order.cost}
-          </p>
-          <p>
-            <span className="text-slate-400">Paid Amount:</span> $
-            {order.paidAmount}
-          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Cost Amount
+              </label>
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                ${order.cost}
+              </span>
+            </div>
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Paid Amount
+              </label>
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                ${order.paidAmount}
+              </span>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-6 space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           <div>
-            <label className="block font-bold">Username</label>
-            {order.username ? (
-              <div className="flex items-center gap-2">
-                <span className="block p-2 bg-gray-200 rounded-lg">
-                  {order.username}
-                </span>
-                <button
-                  onClick={() => handleCopy(order.username)}
-                  className="p-2 text-blue-500 rounded hover:text-blue-600"
-                  title="Copy Username"
-                >
-                  <FaCopy size={20} />
-                </button>
-              </div>
-            ) : (
-              <input
-                type="text"
-                placeholder="Enter username"
-                value={updates.username}
-                onChange={(e) =>
-                  setUpdates({ ...updates, username: e.target.value })
-                }
-                className="w-full p-2 border rounded-lg"
-              />
-            )}
+            <label className="block text-gray-700 font-semibold">
+              Username
+            </label>
+            <div className="flex items-center gap-2">
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                {order.username}
+              </span>
+              <button
+                onClick={() => handleCopy(order.username)}
+                className="p-3 text-blue-500 rounded hover:text-blue-600"
+                title="Copy Username"
+              >
+                <FaCopy size={20} />
+              </button>
+            </div>
           </div>
-
           <div>
-            <label className="block font-bold">Password</label>
-            {order.password ? (
-              <div className="flex items-center gap-2">
-                <span className="block p-2 bg-gray-200 rounded-lg">
-                  {order.password}
-                </span>
-                <button
-                  onClick={() => handleCopy(order.password)}
-                  className="p-2 text-blue-500 rounded hover:text-blue-600"
-                  title="Copy Password"
-                >
-                  <FaCopy size={20} />
-                </button>
-              </div>
-            ) : (
-              <input
-                type="text"
-                placeholder="Enter password"
-                value={updates.password}
-                onChange={(e) =>
-                  setUpdates({ ...updates, password: e.target.value })
-                }
-                className="w-full p-2 border rounded-lg"
-              />
-            )}
+            <label className="block text-gray-700 font-semibold">
+              Password
+            </label>
+            <div className="flex items-center gap-2">
+              <span className="block p-3 bg-gray-200 rounded-lg">
+                {order.password}
+              </span>
+              <button
+                onClick={() => handleCopy(order.password)}
+                className="p-3 text-blue-500 rounded hover:text-blue-600"
+                title="Copy Password"
+              >
+                <FaCopy size={20} />
+              </button>
+            </div>
           </div>
+        </div>
 
+        <div className="mt-8 space-y-6">
           <div>
-            <label className="block font-bold">More Info</label>
+            <label className="block text-gray-700 font-semibold">
+              More Info
+            </label>
             <textarea
               placeholder={order.moreInfo || "Enter additional info"}
               value={updates.moreInfo}
               onChange={(e) =>
                 setUpdates({ ...updates, moreInfo: e.target.value })
               }
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-3 border rounded-lg"
             />
           </div>
 
           <div>
-            <label className="block font-bold">Increment Paid Amount</label>
+            <label className="block text-gray-700 font-semibold">
+              Increment Paid Amount
+            </label>
             <input
               type="number"
               placeholder="Enter amount to add"
@@ -237,24 +277,16 @@ const OrderView = () => {
               onChange={(e) =>
                 setUpdates({ ...updates, incrementAmount: e.target.value })
               }
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-3 border rounded-lg"
             />
           </div>
         </div>
 
         <button
           onClick={handleUpdate}
-          className="w-full py-2 mt-6 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition-transform transform hover:-translate-y-1"
+          className="w-full py-3 mt-8 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition-transform transform hover:-translate-y-1"
         >
           Update Order
-        </button>
-
-        {/* Back Button */}
-        <button
-          onClick={() => navigate(-1)}
-          className="w-full py-2 mt-4 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-transform transform hover:-translate-y-1"
-        >
-          Back
         </button>
       </div>
     </motion.div>
