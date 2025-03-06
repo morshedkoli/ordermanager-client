@@ -46,22 +46,22 @@ const Statistics = () => {
   const getStatusStyles = (status) => {
     switch (status) {
       case "pending":
-        return "bg-red-500 text-white";
+        return "bg-gradient-to-br from-red-400 to-red-600 text-white shadow hover:from-red-500 hover:to-red-700";
       case "application done":
-        return "bg-orange-400 text-white";
+        return "bg-gradient-to-br from-orange-400 to-orange-600 text-white shadow hover:from-orange-500 hover:to-orange-700";
       case "in progress":
-        return "bg-gradient-to-r from-red-400 to-green-400 text-white";
+        return "bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow hover:from-blue-500 hover:to-blue-700";
       case "done":
-        return "bg-green-500 text-white";
+        return "bg-gradient-to-br from-green-400 to-green-600 text-white shadow hover:from-green-500 hover:to-green-700";
       case "delivered":
-        return "bg-white text-black border border-gray-300";
+        return "bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow hover:from-purple-500 hover:to-purple-700";
       default:
-        return "bg-blue-200 text-black";
+        return "bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow hover:from-indigo-500 hover:to-indigo-700";
     }
   };
 
   return (
-    <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 px-2">
       {statusSteps.map((status) => (
         <motion.div
           key={status}
@@ -71,21 +71,20 @@ const Statistics = () => {
             duration: 0.5,
             delay: 0.1 * statusSteps.indexOf(status),
           }}
-          whileHover={{ scale: 1.05 }}
-          className={`p-6 rounded-lg shadow-xl ${getStatusStyles(status)}`}
+          whileHover={{ scale: 1.02 }}
+          className={`p-2 sm:p-3 rounded-lg ${getStatusStyles(status)}`}
         >
-          <h3 className="text-xl font-bold capitalize">{status}</h3>
-          <p className="text-4xl font-extrabold mt-2">
+          <h3 className="text-xs sm:text-sm font-semibold capitalize truncate">{status}</h3>
+          <p className="text-xl sm:text-2xl font-bold mt-1">
             {statistics[status] || 0}
           </p>
           <motion.div
-            className="mt-4 h-2 bg-opacity-30 rounded-full"
+            className="mt-2 h-1 bg-white bg-opacity-30 rounded-full"
             initial={{ width: "0%" }}
             animate={{
               width: `${(statistics[status] / (orders.length || 1)) * 100}%`,
             }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            style={{ backgroundColor: "white" }}
           />
         </motion.div>
       ))}

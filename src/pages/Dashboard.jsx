@@ -28,8 +28,8 @@ const Dashboard = () => {
     "in progress",
     "done",
     "delivered",
+    "cancelled"
   ];
-
   // Use useCallback to memoize fetchOrders so that it's not recreated on every render
   const fetchOrders = useCallback(async () => {
     try {
@@ -40,9 +40,7 @@ const Dashboard = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
-      let filteredOrders = response.data;
-
+      let filteredOrders = response.data.filter(order => order.status !== 'delivered' && order.status !== 'cancelled' && parseInt(order.paidAmount) < parseInt(order.cost));
       // Apply search query filter
       if (searchQuery) {
         filteredOrders = filteredOrders.filter(
@@ -128,51 +126,64 @@ const Dashboard = () => {
   const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
 
   return (
-    <div className="p-6">
+    <div className="p-2 sm:p-4 md:p-8 max-w-7xl mx-auto bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
       <ToastContainer position="top-right" autoClose={3000} />
-      <Statistics orders={orders} statusSteps={statusSteps} />
+      
+      <div className="mb-6 sm:mb-10">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 px-2">Dashboard Overview</h1>
+        <Statistics orders={orders} statusSteps={statusSteps} />
+      </div>
 
-      {/* Animated Create Order button */}
-      <motion.button
-        onClick={() => navigate("/create-order")}
-        className="btn bg-green-500 text-white py-2 px-4 rounded-lg shadow-md transform transition-all duration-300 ease-in-out hover:bg-green-600 hover:scale-105"
-        whileHover={{ scale: 1.05 }} // Scale up on hover using framer-motion
-        whileTap={{ scale: 0.95 }} // Scale down when clicked
-      >
-        Create Order
-      </motion.button>
+      <div className="flex flex-col gap-4 px-2 mb-6 sm:mb-8">
+        <motion.button
+          onClick={() => navigate("/create-order")}
+          className="w-full sm:w-auto btn bg-gradient-to-r from-green-500 to-emerald-600 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:from-green-600 hover:to-emerald-700 hover:shadow-xl font-semibold text-sm sm:text-base"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          + Create New Order
+        </motion.button>
 
-      {/* Search Bar Component */}
-      <SearchBar
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        handleSearch={handleSearch}
-      />
+        <div className="w-full">
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            handleSearch={handleSearch}
+          />
+        </div>
+      </div>
 
-      {/* Filters */}
-      <ServiceFilter
-        serviceNames={serviceNames}
-        handleServiceNameFilter={handleServiceNameFilter}
-      />
-      <StatusFilter
-        statusSteps={statusSteps}
-        handleStatusFilter={handleStatusFilter} // Pass the filter handler to the new component
-      />
+      <div className="flex flex-col gap-4 px-2 mb-6">
+        <div className="w-full">
+          <ServiceFilter
+            serviceNames={serviceNames}
+            handleServiceNameFilter={handleServiceNameFilter}
+          />
+        </div>
+        <div className="w-full">
+          <StatusFilter
+            statusSteps={statusSteps}
+            handleStatusFilter={handleStatusFilter}
+          />
+        </div>
+      </div>
 
-      {/* Order Table */}
-      <OrderTable
-        orders={currentOrders}
-        handleStatusChange={handleStatusChange}
-        statusSteps={statusSteps}
-      />
+      <div className="overflow-x-auto bg-white rounded-lg shadow mx-2">
+        <OrderTable
+          orders={currentOrders}
+          handleStatusChange={handleStatusChange}
+          statusSteps={statusSteps}
+        />
+      </div>
 
-      {/* Pagination */}
-      <Pagination
-        totalOrders={orders.length}
-        ordersPerPage={ordersPerPage}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      <div className="mt-4 sm:mt-6 px-2">
+        <Pagination
+          totalOrders={orders.length}
+          ordersPerPage={ordersPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
     </div>
   );
 };

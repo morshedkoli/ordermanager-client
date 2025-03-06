@@ -69,22 +69,21 @@ const OrderForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-4">
-      {/* Toast Container */}
+    <div className="min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-2 sm:p-4 md:p-6">
       <ToastContainer />
 
       <form
-        className="w-full max-w-3xl p-8 bg-white rounded-lg shadow-2xl sm:p-10"
+        className="w-full max-w-3xl mx-auto p-4 sm:p-6 md:p-8 bg-white rounded-lg shadow-2xl"
         onSubmit={handleSubmit}
       >
-        <h1 className="mb-2 text-4xl font-bold text-center text-purple-700">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-purple-700 mb-2">
           Order Management System
         </h1>
-        <p className="mb-6 text-center text-lg text-gray-600">
+        <p className="mb-6 text-center text-base sm:text-lg text-gray-600">
           Fill out the form below to create a new order.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {/* Service Name */}
           <div>
             <label
@@ -97,7 +96,7 @@ const OrderForm = () => {
               id="serviceName"
               value={serviceName}
               onChange={(e) => setServiceName(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               <option value="">Select One</option>
               <option value="new Nid">New NID</option>
@@ -122,7 +121,7 @@ const OrderForm = () => {
               placeholder="Enter customer name"
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -140,7 +139,7 @@ const OrderForm = () => {
               placeholder="Enter agent name"
               value={agent}
               onChange={(e) => setAgent(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -157,7 +156,7 @@ const OrderForm = () => {
               id="deliveryDate"
               value={deliveryDate}
               onChange={(e) => setDeliveryDate(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -175,7 +174,7 @@ const OrderForm = () => {
               placeholder="Enter cost"
               value={cost}
               onChange={(e) => setCost(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -193,7 +192,7 @@ const OrderForm = () => {
               placeholder="Enter paid amount"
               value={paidAmount}
               onChange={(e) => setPaidAmount(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -211,7 +210,7 @@ const OrderForm = () => {
               placeholder="Enter username"
               value={username || ""}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -229,7 +228,7 @@ const OrderForm = () => {
               placeholder="Enter password"
               value={password || ""}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -246,7 +245,7 @@ const OrderForm = () => {
               id="birthdate"
               value={birthdate}
               onChange={(e) => setBirthdate(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -262,7 +261,7 @@ const OrderForm = () => {
               id="status"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               <option value="agreement">Agreement</option>
               <option value="pending">Pending</option>
@@ -287,14 +286,15 @@ const OrderForm = () => {
             placeholder="Enter additional information"
             value={moreinfo}
             onChange={(e) => setMoreInfo(e.target.value)}
-            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            rows="3"
           />
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full mt-8 py-3 text-lg text-white bg-gradient-to-r from-green-400 to-blue-500 rounded-lg hover:from-green-500 hover:to-blue-600 transition-transform duration-300 transform hover:-translate-y-1"
+          className="w-full mt-6 py-2.5 sm:py-3 text-base sm:text-lg text-white bg-gradient-to-r from-green-400 to-blue-500 rounded-lg hover:from-green-500 hover:to-blue-600 transition-transform duration-300 transform hover:-translate-y-1 font-semibold"
         >
           Submit Order
         </button>

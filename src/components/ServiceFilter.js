@@ -1,36 +1,27 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const ServiceFilter = ({ serviceNames, handleServiceNameFilter }) => (
-  <div className="flex flex-wrap gap-3 mt-6">
-    {serviceNames.map((serviceName) => (
-      <motion.button
-        key={serviceName}
-        onClick={() => handleServiceNameFilter(serviceName)}
-        whileHover={{
-          scale: 1.1,
-          backgroundColor: "#4F46E5",
-          color: "#FFF",
-        }}
-        whileTap={{ scale: 0.95 }}
-        className="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 font-semibold shadow-md transition-all hover:bg-blue-500 hover:text-white"
+const ServiceFilter = ({ serviceNames, handleServiceNameFilter }) => {
+  return (
+    <div className="mt-6">
+      <label htmlFor="serviceFilter" className="block text-sm font-medium text-gray-700 mb-2">
+        Filter by Service
+      </label>
+      <motion.select
+        id="serviceFilter"
+        onChange={(e) => handleServiceNameFilter(e.target.value)}
+        className="w-full p-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        whileHover={{ scale: 1.01 }}
       >
-        {serviceName.toUpperCase()}
-      </motion.button>
-    ))}
-    <motion.button
-      onClick={() => handleServiceNameFilter("")}
-      whileHover={{
-        scale: 1.1,
-        backgroundColor: "#4F46E5",
-        color: "#FFF",
-      }}
-      whileTap={{ scale: 0.95 }}
-      className="px-4 py-2 rounded-lg bg-gray-400 text-gray-800 font-semibold shadow-md transition-all hover:bg-blue-500 hover:text-white"
-    >
-      All Services
-    </motion.button>
-  </div>
-);
+        <option value="">All Services</option>
+        {serviceNames.map((serviceName) => (
+          <option key={serviceName} value={serviceName}>
+            {serviceName.toUpperCase()}
+          </option>
+        ))}
+      </motion.select>
+    </div>
+  );
+};
 
 export default ServiceFilter;
